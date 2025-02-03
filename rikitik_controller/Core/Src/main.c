@@ -16,50 +16,8 @@
   ******************************************************************************
   */
 
-//
-//__ALIGN_BEGIN static uint8_t CUSTOM_HID_ReportDesc_FS[USBD_CUSTOM_HID_REPORT_DESC_SIZE] __ALIGN_END =
-//{
-//  0x05, 0x01,    // Usage Page (Generic Desktop)
-//  0x09, 0x05,    // Usage (Gamepad)
-//  0xA1, 0x01,    // Collection (Application)
-//  0x09, 0x01,    // Usage (Pointer)
-//  0xA1, 0x00,    // Collection (Physical)
-//
-//  // --- Digital Inputs (Buttons) ---
-//  0x05, 0x09,    // Usage Page (Button)
-//  0x19, 0x01,    // Usage Minimum (Button 1)
-//  0x29, 0x08,    // Usage Maximum (Button 8)
-//  0x15, 0x00,    // Logical Minimum (0)
-//  0x25, 0x01,    // Logical Maximum (1)
-//  0x95, 0x08,    // Report Count (8 buttons)
-//  0x75, 0x01,    // Report Size (1 bit per button)
-//  0x81, 0x02,    // Input (Data, Variable, Absolute) - 8 button states
-//
-//  // --- Digital Inputs (Buttons part 2) ---
-//  0x05, 0x09,    // Usage Page (Button)
-//  0x19, 0x01,    // Usage Minimum (Button 1)
-//  0x29, 0x08,    // Usage Maximum (Button 8)
-//  0x15, 0x00,    // Logical Minimum (0)
-//  0x25, 0x01,    // Logical Maximum (1)
-//  0x95, 0x08,    // Report Count (8 buttons)
-//  0x75, 0x01,    // Report Size (1 bit per button)
-//  0x81, 0x02,    // Input (Data, Variable, Absolute) - 8 button states
-//
-//  // --- Analog Inputs (Two Joysticks, 4 Axes: X1, Y1, Z, Rz) ---
-//  0x05, 0x01,    // Usage Page (Generic Desktop)
-//  0x09, 0x30,    // Usage (X Axis for Joystick 1)
-//  0x09, 0x31,    // Usage (Y Axis for Joystick 1)
-//  0x09, 0x32,    // Usage (Z Axis for Joystick 2)
-//  0x09, 0x33,    // Usage (Rz Axis for Joystick 2)
-//  0x15, 0x81,    // Logical Minimum (-127)
-//  0x25, 0x7F,    // Logical Maximum (127)
-//  0x75, 0x08,    // Report Size (8 bits per axis)
-//  0x95, 0x04,    // Report Count (4 axes: X1, Y1, Z, Rz)
-//  0x81, 0x02,    // Input (Data, Variable, Absolute) - 4 axis values
-//
-//  0xC0,          // End Collection (Application)
-//  0xC0    /*     END_COLLECTION	             */
-//};
+
+// See CUSTOM_HID_ReportDesc_FS for the HID Device Descriptor
 
 
 /* USER CODE END Header */
@@ -189,11 +147,10 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc) {
 }
 
 
-
+extern uint8_t USBD_CUSTOM_HID_SendReport();
 void sendReport()
 {
 	 USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, (uint8_t *) &joystick_report_container, 6);
-//	 USBD_CUSTOM_HID_DataOut(&hUsbDeviceFS, 0);
 }
 
 
@@ -286,10 +243,9 @@ int main(void)
 	buttons |= !HAL_GPIO_ReadPin(BTN16_GPIO_Port, BTN16_Pin) << 15;
 	joystick_report_container.buttons = buttons;
 
-	USBD_CUSTOM_HID_HandleTypeDef *hhid = (USBD_CUSTOM_HID_HandleTypeDef *)hUsbDeviceFS.pClassData;
-	hhid->Report_buf[0];
-	hhid->Report_buf[1];
 
+	// Access the incoming data buffer
+	USBD_CUSTOM_HID_HandleTypeDef *hhid = (USBD_CUSTOM_HID_HandleTypeDef *)hUsbDeviceFS.pClassData;
 	HAL_GPIO_WritePin(DEBUG_LED_GPIO_Port, DEBUG_LED_Pin, hhid->Report_buf[0] & 1);
 
 

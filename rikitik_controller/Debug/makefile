@@ -88,8 +88,8 @@ all: main-build
 main-build: rikitik_controller.elf secondary-outputs
 
 # Tool invocations
-rikitik_controller.elf rikitik_controller.map: $(OBJS) $(USER_OBJS) /home/martin/Dropbox/UQAR_charge_de_cours/2024_automne/stm32_workspace/rikitik_controller/STM32F103C8TX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-g++ -o "rikitik_controller.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"/home/martin/Dropbox/UQAR_charge_de_cours/2024_automne/stm32_workspace/rikitik_controller/STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="rikitik_controller.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+rikitik_controller.elf rikitik_controller.map: $(OBJS) $(USER_OBJS) /home/martin/Dropbox/UQAR_charge_de_cours/2024_automne/stm32_workspace/generic-controller/rikitik_controller/STM32F103C8TX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-g++ -o "rikitik_controller.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"/home/martin/Dropbox/UQAR_charge_de_cours/2024_automne/stm32_workspace/generic-controller/rikitik_controller/STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="rikitik_controller.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

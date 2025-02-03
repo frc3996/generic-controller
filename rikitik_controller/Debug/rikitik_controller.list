@@ -27,25 +27,25 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   ALLOC
  11 .ARM.attributes 00000029  00000000  00000000  0000b188  2**0
                   CONTENTS, READONLY
- 12 .debug_info   000129c2  00000000  00000000  0000b1b1  2**0
+ 12 .debug_info   000129b1  00000000  00000000  0000b1b1  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 13 .debug_abbrev 0000338c  00000000  00000000  0001db73  2**0
+ 13 .debug_abbrev 0000338e  00000000  00000000  0001db62  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 14 .debug_aranges 00001158  00000000  00000000  00020f00  2**3
+ 14 .debug_aranges 00001158  00000000  00000000  00020ef0  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_rnglists 00000d2c  00000000  00000000  00022058  2**0
+ 15 .debug_rnglists 00000d2c  00000000  00000000  00022048  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_macro  0001abec  00000000  00000000  00022d84  2**0
+ 16 .debug_macro  0001abec  00000000  00000000  00022d74  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_line   00014d90  00000000  00000000  0003d970  2**0
+ 17 .debug_line   00014d90  00000000  00000000  0003d960  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    00092090  00000000  00000000  00052700  2**0
+ 18 .debug_str    00092103  00000000  00000000  000526f0  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000043  00000000  00000000  000e4790  2**0
+ 19 .comment      00000043  00000000  00000000  000e47f3  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  000046d4  00000000  00000000  000e47d4  2**2
+ 20 .debug_frame  000046d4  00000000  00000000  000e4838  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 21 .debug_line_str 00000088  00000000  00000000  000e8ea8  2**0
+ 21 .debug_line_str 00000088  00000000  00000000  000e8f0c  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -284,7 +284,7 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc) {
 0800027c <sendReport>:
 
 
-
+extern uint8_t USBD_CUSTOM_HID_SendReport();
 void sendReport()
 {
  800027c:	b580      	push	{r7, lr}
@@ -294,7 +294,6 @@ void sendReport()
  8000282:	4903      	ldr	r1, [pc, #12]	@ (8000290 <sendReport+0x14>)
  8000284:	4803      	ldr	r0, [pc, #12]	@ (8000294 <sendReport+0x18>)
  8000286:	f007 f935 	bl	80074f4 <USBD_CUSTOM_HID_SendReport>
-//	 USBD_CUSTOM_HID_DataOut(&hUsbDeviceFS, 0);
 }
  800028a:	bf00      	nop
  800028c:	bd80      	pop	{r7, pc}
@@ -627,13 +626,12 @@ int main(void)
  800050c:	88fb      	ldrh	r3, [r7, #6]
  800050e:	8093      	strh	r3, [r2, #4]
 
+
+	// Access the incoming data buffer
 	USBD_CUSTOM_HID_HandleTypeDef *hhid = (USBD_CUSTOM_HID_HandleTypeDef *)hUsbDeviceFS.pClassData;
  8000510:	4b10      	ldr	r3, [pc, #64]	@ (8000554 <main+0x2a8>)
  8000512:	f8d3 32b8 	ldr.w	r3, [r3, #696]	@ 0x2b8
  8000516:	603b      	str	r3, [r7, #0]
-	hhid->Report_buf[0];
-	hhid->Report_buf[1];
-
 	HAL_GPIO_WritePin(DEBUG_LED_GPIO_Port, DEBUG_LED_Pin, hhid->Report_buf[0] & 1);
  8000518:	683b      	ldr	r3, [r7, #0]
  800051a:	781b      	ldrb	r3, [r3, #0]
