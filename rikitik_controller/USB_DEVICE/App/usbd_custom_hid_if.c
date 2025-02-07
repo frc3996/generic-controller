@@ -90,7 +90,7 @@
 /** Usb HID report descriptor. */
 __ALIGN_BEGIN static uint8_t CUSTOM_HID_ReportDesc_FS[USBD_CUSTOM_HID_REPORT_DESC_SIZE] __ALIGN_END =
 {
-	/* USER CODE BEGIN 0 */
+  /* USER CODE BEGIN 0 */
 	0x05, 0x01,        // Usage Page (Generic Desktop) - Specifies the type of device (e.g., joystick, mouse)
 	0x09, 0x04,        // Usage (Joystick) - Device type is a joystick
 	0xA1, 0x01,        // Collection (Application) - Begins the joystick's application-level description
@@ -99,7 +99,7 @@ __ALIGN_BEGIN static uint8_t CUSTOM_HID_ReportDesc_FS[USBD_CUSTOM_HID_REPORT_DES
 	0x09, 0x01,      // Usage (Pointer) - Sub-collection for joystick axes
 	0xA1, 0x00,      // Collection (Physical) - Physical collection for axes
 
-	// X, Y, Z, Rx, Ry, Rz, Slider, Dial (8 axes)
+	// X, Y, Z, Rx, Slider, Dial (4 axes)
 	0x09, 0x30,    // Usage (X)
 	0x09, 0x31,    // Usage (Y)
 	0x09, 0x32,    // Usage (Z)
@@ -109,9 +109,9 @@ __ALIGN_BEGIN static uint8_t CUSTOM_HID_ReportDesc_FS[USBD_CUSTOM_HID_REPORT_DES
 	0x15, 0x81,    // Logical Minimum (-127)
 	0x25, 0x7F,    // Logical Maximum (127)
 
-	// Report format: 8 bytes (8 axes, 8 bits each)
+	// Report format: 8 bytes (4 axes, 8 bits each)
 	0x75, 0x08,    // Report Size (8 bits per axis)
-	0x95, 0x04,    // Report Count (8 axes)
+	0x95, 0x04,    // Report Count (4 axes)
 
 	// Input report for axes: Data, Variable, Absolute (input values)
 	0x81, 0x02,    // Input (Data, Variable, Absolute)
@@ -121,42 +121,42 @@ __ALIGN_BEGIN static uint8_t CUSTOM_HID_ReportDesc_FS[USBD_CUSTOM_HID_REPORT_DES
 	// Buttons Definitions
 	0x05, 0x09,      // Usage Page (Button) - Button controls
 	0x19, 0x01,      // Usage Minimum (Button 1) - First button
-	0x29, 0x10,      // Usage Maximum (Button 22) - Defines up to 22 buttons
+	0x29, 0x10,      // Usage Maximum (Button 16) - Defines up to 16 buttons
 
 	// Logical range for buttons (0: not pressed, 1: pressed)
 	0x15, 0x00,      // Logical Minimum (0)
 	0x25, 0x01,      // Logical Maximum (1)
 
-	// Report format: 22 buttons (1 bit per button)
+	// Report format: 16 buttons (1 bit per button)
 	0x75, 0x01,      // Report Size (1 bit per button)
-	0x95, 0x10,      // Report Count (22 buttons)
+	0x95, 0x10,      // Report Count (16 buttons)
 
 	// Input report for buttons: Data, Variable, Absolute (input values)
 	0x81, 0x02,      // Input (Data, Variable, Absolute)
 
-	// LED Output Definitions (4 LEDs)
+	// LED Output Definitions (8 LEDs)
 	0x05, 0x08,      // Usage Page (LED) - Output controls for LEDs
 	0x19, 0x01,      // Usage Minimum (LED 1) - First LED
-	0x29, 0x04,      // Usage Maximum (LED 12) - Defines up to 12 LEDs
+	0x29, 0x08,      // Usage Maximum (LED 8) - Defines up to 8 LEDs
 
 	// Logical range for LEDs (0: off, 1: on)
 	0x15, 0x00,      // Logical Minimum (0)
 	0x25, 0x01,      // Logical Maximum (1)
 
-	// Report format: 12 LEDs (1 bit per LED)
+	// Report format: 8 LEDs (1 bit per LED)
 	0x75, 0x01,      // Report Size (1 bit per LED)
-	0x95, 0x04,      // Report Count (12 LEDs)
+	0x95, 0x08,      // Report Count (8 LEDs)
 
 	// Output report for LEDs: Data, Variable, Absolute (output values)
 	0x91, 0x02,      // Output (Data, Variable, Absolute)
 
-	// Padding: 4 bits to align the output data to byte boundaries
-	0x95, 0x01,      // Report Count (1)
-	0x75, 0x04,      // Report Size (4 bits of padding)
-	0x91, 0x03,      // Output (Constant) - Padding
+	// Example of a padding of 4 bits if not aligned to 8
+	//	0x95, 0x01,      // Report Count (1)
+	//	0x75, 0x04,      // Report Size (4 bits of padding)  <--- adapt this to number of bits
+	//	0x91, 0x03,      // Output (Constant) - Padding
 
-	/* USER CODE END 0 */
-	0xC0    /*     END_COLLECTION	             */
+  /* USER CODE END 0 */
+  0xC0    /*     END_COLLECTION	             */
 };
 
 /* USER CODE BEGIN PRIVATE_VARIABLES */

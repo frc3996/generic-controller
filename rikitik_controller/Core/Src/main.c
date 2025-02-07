@@ -246,7 +246,14 @@ int main(void)
 
 	// Access the incoming data buffer
 	USBD_CUSTOM_HID_HandleTypeDef *hhid = (USBD_CUSTOM_HID_HandleTypeDef *)hUsbDeviceFS.pClassData;
-	HAL_GPIO_WritePin(DEBUG_LED_GPIO_Port, DEBUG_LED_Pin, hhid->Report_buf[0] & 1);
+	HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, (hhid->Report_buf[0] >> 0) & 0x01);
+	HAL_GPIO_WritePin(LED2_GPIO_Port, LED2_Pin, (hhid->Report_buf[0] >> 1) & 0x01);
+	HAL_GPIO_WritePin(LED3_GPIO_Port, LED3_Pin, (hhid->Report_buf[0] >> 2) & 0x01);
+	HAL_GPIO_WritePin(LED4_GPIO_Port, LED4_Pin, (hhid->Report_buf[0] >> 3) & 0x01);
+	HAL_GPIO_WritePin(LED5_GPIO_Port, LED5_Pin, (hhid->Report_buf[0] >> 4) & 0x01);
+	HAL_GPIO_WritePin(LED6_GPIO_Port, LED6_Pin, (hhid->Report_buf[0] >> 5) & 0x01);
+	HAL_GPIO_WritePin(LED7_GPIO_Port, LED7_Pin, (hhid->Report_buf[0] >> 6) & 0x01);
+	HAL_GPIO_WritePin(LED8_GPIO_Port, LED8_Pin, (hhid->Report_buf[0] >> 7) & 0x01);
 
 
 	HAL_Delay(5);
@@ -443,45 +450,51 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(DEBUG_LED_GPIO_Port, DEBUG_LED_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOC, LED3_Pin|LED4_Pin|LED5_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, LED0_Pin|LED1_Pin|LED2_Pin|LED3_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(LED6_GPIO_Port, LED6_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pin : DEBUG_LED_Pin */
-  GPIO_InitStruct.Pin = DEBUG_LED_Pin;
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOB, LED7_Pin|LED8_Pin|LED1_Pin|LED2_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pins : LED3_Pin LED4_Pin LED5_Pin */
+  GPIO_InitStruct.Pin = LED3_Pin|LED4_Pin|LED5_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(DEBUG_LED_GPIO_Port, &GPIO_InitStruct);
-
-  /*Configure GPIO pins : BTN12_Pin BTN13_Pin */
-  GPIO_InitStruct.Pin = BTN12_Pin|BTN13_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : BTN14_Pin BTN15_Pin BTN16_Pin BTN5_Pin
+  /*Configure GPIO pin : LED6_Pin */
+  GPIO_InitStruct.Pin = LED6_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(LED6_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : BTN12_Pin BTN13_Pin BTN14_Pin BTN5_Pin
                            BTN6_Pin BTN7_Pin */
-  GPIO_InitStruct.Pin = BTN14_Pin|BTN15_Pin|BTN16_Pin|BTN5_Pin
+  GPIO_InitStruct.Pin = BTN12_Pin|BTN13_Pin|BTN14_Pin|BTN5_Pin
                           |BTN6_Pin|BTN7_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : LED0_Pin LED1_Pin LED2_Pin LED3_Pin */
-  GPIO_InitStruct.Pin = LED0_Pin|LED1_Pin|LED2_Pin|LED3_Pin;
+  /*Configure GPIO pins : BTN15_Pin BTN16_Pin BTN1_Pin BTN2_Pin
+                           BTN3_Pin BTN4_Pin BTN8_Pin BTN9_Pin
+                           BTN10_Pin BTN11_Pin */
+  GPIO_InitStruct.Pin = BTN15_Pin|BTN16_Pin|BTN1_Pin|BTN2_Pin
+                          |BTN3_Pin|BTN4_Pin|BTN8_Pin|BTN9_Pin
+                          |BTN10_Pin|BTN11_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : LED7_Pin LED8_Pin LED1_Pin LED2_Pin */
+  GPIO_InitStruct.Pin = LED7_Pin|LED8_Pin|LED1_Pin|LED2_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-
-  /*Configure GPIO pins : BTN1_Pin BTN2_Pin BTN3_Pin BTN4_Pin
-                           BTN8_Pin BTN9_Pin BTN10_Pin BTN11_Pin */
-  GPIO_InitStruct.Pin = BTN1_Pin|BTN2_Pin|BTN3_Pin|BTN4_Pin
-                          |BTN8_Pin|BTN9_Pin|BTN10_Pin|BTN11_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
 /* USER CODE BEGIN MX_GPIO_Init_2 */
